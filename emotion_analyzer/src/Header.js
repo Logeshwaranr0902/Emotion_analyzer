@@ -7,7 +7,7 @@ const Header = ({ onNightModeToggle, isNightMode }) => {
         <header className={`sticky top-0 flex justify-between items-center p-4 ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'} transition-colors duration-300`}>
             <div className="flex flex-col items-start">
                 <h1 className={`text-2xl font-bold text-white absolute`}>Emotion Analyzer</h1>
-                <p className={`text-md mt-8 ml-[8rem]  text-white`}>By Logeshwaran</p> {/* Add this line */}
+                <p className={`text-md mt-8 ml-[8rem]  text-white`}>By Logeshwaran</p> 
             </div>
             <div className="flex items-center">
                 <button onClick={onNightModeToggle} className="text-white">
