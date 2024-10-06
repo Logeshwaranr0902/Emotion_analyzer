@@ -5,12 +5,12 @@ import numpy as np
 import string
 import nltk
 from flask_cors import CORS
+import os  # Import os for environment variables
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # To allow cross-origin requests
 nltk.download('stopwords')
-
 
 # Load the saved model and vectorizer
 model = joblib.load("emotion_classification_model(20k-randomforest).pkl")
@@ -63,4 +63,4 @@ def upload_file():
         return jsonify(emotion_results)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))  # Use host and port for deployment
