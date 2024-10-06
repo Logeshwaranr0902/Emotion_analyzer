@@ -6,20 +6,20 @@ import string
 import nltk
 from flask_cors import CORS
 
-
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app) 
+CORS(app)  # To allow cross-origin requests
 
+# Load the saved model and vectorizer
+model = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\model\emotion_classification_model(20k-randomforest).pkl')
+vectorizer = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\model\vectorizer(20k-randomforest).pkl')
 
-model = joblib.load(r'C:\Users\Logeshwaran\Downloads\emotion_detection\model\emotion_classification_model(20k-randomforest).pkl')
-vectorizer = joblib.load(r'C:\Users\Logeshwaran\Downloads\emotion_detection\model\vectorizer(20k-randomforest).pkl')
-
-
+# Preprocessing function
 def preprocess_text(text):
-    text = text.lower() 
-    text = text.translate(str.maketrans('', '', string.punctuation))  
-    tokens = text.split()  
-    tokens = [word for word in tokens if word not in nltk.corpus.stopwords.words('english')]  
+    text = text.lower()  # Convert to lowercase
+    text = text.translate(str.maketrans('', '', string.punctuation))  # Remove punctuation
+    tokens = text.split()  # Tokenize
+    tokens = [word for word in tokens if word not in nltk.corpus.stopwords.words('english')]  # Remove stopwords
     return ' '.join(tokens)
 
 @app.route('/upload', methods=['POST'])
@@ -33,19 +33,19 @@ def upload_file():
         return jsonify({'error': 'No selected file'})
 
     if file:
-    
+        # Load CSV into DataFrame
         df = pd.read_csv(file)
 
-    
+        # Preprocess text
         df['cleaned_comments'] = df['text'].apply(preprocess_text)
 
-       
+        # Vectorize text
         new_comments_vectorized = vectorizer.transform(df['cleaned_comments'])
 
-        
+        # Predict emotions
         predictions = model.predict(new_comments_vectorized)
 
-        
+        # Count occurrences of each emotion
         emotion_counts = np.bincount(predictions, minlength=6)
         emotion_dict = {
             0: 'sadness',
@@ -57,7 +57,7 @@ def upload_file():
         }
         emotion_results = {emotion_dict[i]: int(count) for i, count in enumerate(emotion_counts)}
 
-       
+        # Return the results as JSON
         return jsonify(emotion_results)
 
 if __name__ == '__main__':
