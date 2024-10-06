@@ -9,10 +9,12 @@ from flask_cors import CORS
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # To allow cross-origin requests
+nltk.download('stopwords')
+
 
 # Load the saved model and vectorizer
-model = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\model\emotion_classification_model(20k-randomforest).pkl')
-vectorizer = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\model\vectorizer(20k-randomforest).pkl')
+model = joblib.load('./model/emotion_classification_model(20k-randomforest).pkl')
+vectorizer = joblib.load('./model/vectorizer(20k-randomforest).pkl')
 
 # Preprocessing function
 def preprocess_text(text):
