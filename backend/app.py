@@ -5,7 +5,7 @@ import numpy as np
 import string
 import nltk
 from flask_cors import CORS
-import os  # Import os for environment variables
+import os 
 
 # Initialize Flask app
 app = Flask(__name__)
