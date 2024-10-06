@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import 'tailwindcss/tailwind.css';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-
-
+import React, { useState } from "react";
+import axios from "axios";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import "tailwindcss/tailwind.css";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 function App({ nightMode }) {
   const [file, setFile] = useState(null);
@@ -26,12 +24,16 @@ function App({ nightMode }) {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      const data = Object.keys(response.data).map(key => ({
+      const response = await axios.post(
+        "https://emotion-analyzer.onrender.com/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = Object.keys(response.data).map((key) => ({
         name: key,
         count: response.data[key],
       }));
@@ -44,16 +46,22 @@ function App({ nightMode }) {
   };
 
   const handleInfoClick = () => {
-    alert(`File Format : CSV \nAll the comments/text should be in the first column with coulmn header as "text" `);
+    alert(
+      `File Format : CSV \nAll the comments/text should be in the first column with coulmn header as "text" `
+    );
   };
 
   return (
-    <div className={`min-h-screen flex flex-col  ${nightMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+    <div
+      className={`min-h-screen flex flex-col  ${
+        nightMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
+      }`}
+    >
       <div className="flex flex-col items-center  justify-center mt-[8rem]">
         <h1 className="text-7xl font-bold mb-6">Emotion Analyzer</h1>
 
         <div className="flex flex-col items-center">
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <input
               type="file"
               accept=".csv"
@@ -68,7 +76,7 @@ function App({ nightMode }) {
             onClick={handleSubmit}
             className="bg-blue-500 text-white px-4 py-2 rounded "
           >
-            {loading ? 'Processing...' : 'Analyze Emotions'}
+            {loading ? "Processing..." : "Analyze Emotions"}
           </button>
         </div>
 
