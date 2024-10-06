@@ -13,8 +13,8 @@ nltk.download('stopwords')
 
 
 # Load the saved model and vectorizer
-model = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\backend\emotion_classification_model(20k-randomforest).pkl')
-vectorizer = joblib.load(r'C:\Users\Logeshwaran\Downloads\Github repo\Emotion_analyzer\backend\vectorizer(20k-randomforest).pkl')
+model = joblib.load("emotion_classification_model(20k-randomforest).pkl")
+vectorizer = joblib.load('vectorizer(20k-randomforest).pkl')
 
 # Preprocessing function
 def preprocess_text(text):
